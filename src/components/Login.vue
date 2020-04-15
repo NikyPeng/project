@@ -13,10 +13,18 @@
         </a-input>
       </a-form-item>
       <a-form-item :validate-status="passwordError() ? 'error' : ''" :help="passwordError() || ''">
-        <a-input
+        <!-- <a-input
           v-decorator="[
             'password',
             { rules: [{ required: true, min: 6,max: 16,pattern: new RegExp(/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#\.])/g),message: 'Please input your Password!' }] },
+          ]"
+          type="password"
+          placeholder="Password"
+        > -->
+        <a-input
+          v-decorator="[
+            'password',
+            { rules: [{ required: true, min: 6,max: 16,message: 'Please input your Password!' }] },
           ]"
           type="password"
           placeholder="Password"
@@ -66,8 +74,25 @@ export default Vue.extend({
         if (!err) {
           console.log('Received values of form: ', values);
           let {userName,password} = values;
-          this.$cache.set("auth-token", encodeURIComponent(`${userName}|${password}`));
-          this.$router.go("/home")
+          this.$axios.post('/api/login',{
+            username: userName,
+            password
+          }).then(res => {
+            console.log("==Login -> res==", res, this.$router, this.$route)
+            if(res.status === 200 && res.data){
+              let {code, data} = res.data;
+              data && data.token && this.$cache.set("auth-token", data.token);
+              if(!code && data && data.token){
+                this.$cache.set("auth-token", data.token);
+                this.$router.go("/");
+                return;
+              }
+            }
+            this.$message.error("登录异常，请稍后再试");
+          }).catch(err => {
+            console.log("Login -> err", err)
+            this.$message.error("登录失败，请稍后再试");
+          })
         }
       });
     }

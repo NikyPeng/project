@@ -6,7 +6,7 @@ class Cache {
     if(Object.prototype.hasOwnProperty.call(this.cache, key)){
       data = this.cache[key];
     }else if(window.localStorage){
-      data = JSON.parse(window.localStorage.getItem(key));
+      data = JSON.parse(window.localStorage.getItem(key) || null);
     } 
     if(data){
       let t = new Date().getTime() - data.date;

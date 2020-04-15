@@ -1,7 +1,9 @@
 <template>
   <a-layout class="body" id="components-layout-demo-top-side-2">
     <a-layout-header class="header">
-      <div class="logo" />
+      <a-row type="flex">
+        <a-col :span="3" class="logo">向阳花开</a-col>
+      </a-row>
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="240" style="background: #fff">
@@ -38,11 +40,13 @@ export default Vue.extend({
   /* margin-top: 60px; */
 }
 #components-layout-demo-top-side-2 .logo {
-    width: 120px;
-    height: 31px;
+    padding: 2px 8px;
     background: rgba(255, 255, 255, 0.2);
     margin: 16px 28px 16px 0;
     float: left;
+    color: #ffffff;
+    text-align: center;
+    font: bolder 20px/31px "Times New Roman",Georgia,Serif; 
 }
 .body{
   min-height: 100%;

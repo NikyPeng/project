@@ -1,10 +1,22 @@
 <template>
-  <div>订单列表</div>
+  <div>
+    <InfoTable type="3" />
+  </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import InfoTable from './InfoTable.vue'
 export default Vue.extend({
-  name: "OrderList"
+  name: "OrderList",
+  data() {
+    return {}
+  },
+  methods: {
+    
+  },
+  components: {
+    InfoTable
+  }
 })
 </script>
 <style scoped>
